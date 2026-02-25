@@ -45,7 +45,6 @@ Thumbs.db
 # Secret / Config
 # ======================
 *.env
-appsettings*.json
 bin/Debug/net8.0/
 *.user
 bin/
