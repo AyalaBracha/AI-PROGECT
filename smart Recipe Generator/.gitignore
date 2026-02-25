@@ -77,3 +77,7 @@ Properties/launchSettings.json
 # (safe wildcard to catch common secret file names)
 *secret*
 *credentials*
+
+# Ignore build outputs from any project/subfolder
+**/bin/
+**/obj/
