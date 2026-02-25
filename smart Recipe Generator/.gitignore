@@ -52,3 +52,28 @@ obj/
 *.user
 *.suo
 appsettings.json
+appsettings.Development.json
+appsettings.*.Development.json
+secrets.json
+*.UserSecrets
+*.usersecrets
+*.pfx
+*.pem
+*.key
+*.crt
+*.jks
+*.keystore
+*.credentials
+*.publishsettings
+*.publish.xml
+Properties/launchSettings.json
+.vscode/
+.idea/
+# Client env files
+/client/client/.env
+/client/client/.env.*
+
+# Ignore any local secret files
+# (safe wildcard to catch common secret file names)
+*secret*
+*credentials*
