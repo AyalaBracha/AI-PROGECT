@@ -1,0 +1,28 @@
+<div class="products-container">
+  <div class="header">
+    <button class="back-btn" (click)="goBack()">← חזור לקטגוריות</button>
+    <h1>בחר מוצרים</h1>
+    <button 
+      class="continue-btn" 
+      (click)="goToSummary()"
+      [disabled]="getTotalSelected() === 0"
+    >
+      המשך ({{ getTotalSelected() }})
+    </button>
+  </div>
+
+  
+
+  <div class="products-grid">
+    <div 
+      *ngFor="let product of products" 
+      class="product-card"
+      [class.selected]="isSelected(product)"
+      (click)="toggleProduct(product)"
+    >
+      <div class="product-image">{{ product.image }}</div>
+      <h3>{{ product.name }}</h3>
+      <div class="selection-indicator" *ngIf="isSelected(product)">✓</div>
+    </div>
+  </div>
+</div>

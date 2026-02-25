@@ -1,0 +1,88 @@
+<div class="add-product-container">
+  <div class="form-card">
+    <h2>➕ הוספת מוצר חדש</h2>
+    
+    <form (ngSubmit)="onSubmit()" #productForm="ngForm">
+      <!-- שם המוצר -->
+      <div class="form-group">
+        <label for="name">שם המוצר *</label>
+        <input 
+          type="text" 
+          id="name" 
+          name="name"
+          [(ngModel)]="productName"
+          required
+          placeholder="הזן שם מוצר..."
+          [disabled]="loading"
+        />
+      </div>
+
+      <!-- בחירת קטגוריה -->
+      <div class="form-group">
+        <label for="category">קטגוריה *</label>
+        <div *ngIf="loadingCategories" class="loading-text">טוען קטגוריות...</div>
+        <select 
+          *ngIf="!loadingCategories"
+          id="category" 
+          name="category"
+          [(ngModel)]="selectedCategoryId"
+          required
+          [disabled]="loading"
+        >
+          <option [value]="0" disabled>בחר קטגוריה...</option>
+          <option *ngFor="let cat of categories" [value]="cat.id">
+            {{ cat.image }} {{ cat.name }}
+          </option>
+        </select>
+      </div>
+
+      <!-- בחירת אייקון -->
+      <div class="form-group">
+        <label>בחר אייקון</label>
+        <div class="icon-grid">
+          <div 
+            *ngFor="let icon of availableIcons"
+            class="icon-option"
+            [class.selected]="productImage === icon"
+            (click)="selectIcon(icon)"
+          >
+            {{ icon }}
+          </div>
+        </div>
+        <div class="selected-icon">
+          <span>אייקון נבחר:</span>
+          <span class="icon-preview">{{ productImage }}</span>
+        </div>
+      </div>
+
+      <!-- הודעות -->
+      <div class="message success" *ngIf="successMessage">
+        ✅ {{ successMessage }}
+      </div>
+      
+      <div class="message error" *ngIf="errorMessage">
+        ❌ {{ errorMessage }}
+      </div>
+
+      <!-- כפתורים -->
+      <div class="form-actions">
+        <button 
+          type="button" 
+          class="btn-cancel" 
+          (click)="cancel()"
+          [disabled]="loading"
+        >
+          ביטול
+        </button>
+        <button 
+          type="submit" 
+          class="btn-submit"
+          [disabled]="!productName.trim() || loading || selectedCategoryId <= 0"
+        >
+          <span *ngIf="!loading">הוסף מוצר</span>
+          <span *ngIf="loading">שומר...</span>
+        </button>
+      </div>
+    </form>
+  </div>
+</div>

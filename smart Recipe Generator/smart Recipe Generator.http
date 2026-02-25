@@ -1,0 +1,6 @@
+@smart_Recipe_Generator_HostAddress = http://localhost:5043
+
+GET {{smart_Recipe_Generator_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###

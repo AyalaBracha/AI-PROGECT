@@ -1,0 +1,53 @@
+<div class="categories-container">
+  <div class="header-section">
+    <h1>בחר קטגוריות</h1>
+    <p class="subtitle">בחר קטגוריה כדי לראות את המוצרים</p>
+    <button class="add-category-btn" (click)="goToAddCategory()">
+      ➕ הוסף קטגוריה חדשה
+    </button>
+  </div>
+  
+  <!-- ✅ הוספת loading state -->
+  <div *ngIf="loading" class="loading-container">
+    <div class="spinner"></div>
+    <p>טוען קטגוריות...</p>
+  </div>
+
+  <!-- ✅ הוספת error state -->
+  <div *ngIf="errorMessage && !loading" class="error-container">
+    <p class="error-message">❌ {{ errorMessage }}</p>
+    <button class="retry-btn" (click)="retry()">נסה שוב</button>
+  </div>
+
+  <!-- ✅ הוספת empty state -->
+  <div *ngIf="!loading && !errorMessage && categories.length === 0" class="empty-container">
+    <div class="empty-icon">📁</div>
+    <p>אין קטגוריות עדיין</p>
+    <button class="add-category-btn" (click)="goToAddCategory()">
+      הוסף קטגוריה ראשונה
+    </button>
+  </div>
+  <div class="add-product-section">
+    <button class="add-product-btn" (click)="goToAddProduct()">
+      ➕ הוסף מוצר חדש
+    </button>
+  </div>
+  <!-- ✅ הצגת הקטגוריות -->
+  <div *ngIf="!loading && !errorMessage && categories.length > 0" class="categories-grid">
+    <div 
+      *ngFor="let category of categories" 
+      class="category-card"
+      (click)="selectCategory(category)"
+    >
+      <div class="category-bg"></div>
+      <div class="sparkles">
+        <span>✨</span>
+        <span>⭐</span>
+        <span>💫</span>
+        <span>✦</span>
+      </div>
+      <div class="category-icon">{{ category.image }}</div>
+      <h3>{{ category.name }}</h3>
+    </div>
+  </div>
+</div>

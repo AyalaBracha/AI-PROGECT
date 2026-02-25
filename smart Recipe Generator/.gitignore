@@ -1,0 +1,55 @@
+# ======================
+# Build folders
+# ======================
+/bin/
+/obj/
+/out/
+
+# ======================
+# Visual Studio
+# ======================
+*.user
+*.suo
+*.vsp
+*.vs/
+*.ncb
+*.log
+*.pdb
+*.cache
+*.ilk
+*.sdf
+*.opensdf
+*.VC.db
+*.VC.VC.opendb
+
+# ======================
+# Node / Angular
+# ======================
+/client/client/node_modules/
+/client/client/dist/
+/client/client/.angular/
+
+# ======================
+# npm / package files
+# ======================
+package-lock.json
+yarn.lock
+
+# ======================
+# OS Files
+# ======================
+Thumbs.db
+.DS_Store
+
+# ======================
+# Secret / Config
+# ======================
+*.env
+appsettings*.json
+bin/Debug/net8.0/
+*.user
+bin/
+obj/
+*.user
+*.suo
+appsettings.json

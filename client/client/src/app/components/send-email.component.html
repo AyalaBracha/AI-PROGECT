@@ -1,0 +1,85 @@
+<div class="email-popup-overlay" (click)="closePopup()">
+  <div class="email-popup-content" (click)="$event.stopPropagation()">
+    
+    <!-- כותרת עם אייקון וכפתור סגירה -->
+    <div class="popup-header">
+      <div class="header-icon">✉️</div>
+      <h2>שליחת מתכון למייל</h2>
+      <button type="button" class="close-icon" (click)="closePopup()">×</button>
+    </div>
+
+    <!-- טופס -->
+    <form [formGroup]="form" class="email-form">
+      
+      <!-- שדה מייל -->
+      <div class="form-group">
+        <label for="email">
+          <span class="label-icon">📧</span>
+          כתובת מייל
+        </label>
+        <div class="input-wrapper">
+          <input 
+            type="email"
+            id="email"
+            formControlName="email"
+            placeholder="example@gmail.com"
+            [class.invalid]="form.controls['email'].touched && form.controls['email'].invalid"
+            [class.valid]="form.controls['email'].touched && form.controls['email'].valid"
+          />
+          <span class="input-icon" *ngIf="form.controls['email'].valid">✓</span>
+        </div>
+        
+        <!-- הודעת שגיאה -->
+        <div class="error-message" *ngIf="form.controls['email'].touched && form.controls['email'].invalid">
+          <span class="error-icon">⚠️</span>
+          כתובת מייל אינה תקינה
+        </div>
+      </div>
+
+      <!-- הודעות מערכת -->
+      <div class="system-message" *ngIf="message" 
+           [class.success]="message.includes('נשלח') || message.includes('הצלחה')" 
+           [class.error]="message.includes('שגיאה') || message.includes('נכשל')">
+        <span class="message-icon">
+          {{ message.includes('נשלח') || message.includes('הצלחה') ? '✓' : '✗' }}
+        </span>
+        {{ message }}
+      </div>
+
+      <!-- כפתורי פעולה -->
+      <div class="action-buttons">
+        <button 
+          type="button" 
+          class="send-btn" 
+          (click)="send()" 
+          [disabled]="sending || form.invalid"
+        >
+          <span *ngIf="!sending">
+            <span class="btn-icon">🚀</span>
+            שליחה
+          </span>
+          <span *ngIf="sending" class="sending-state">
+            <span class="spinner">⏳</span>
+            שולח...
+          </span>
+        </button>
+        
+        <button 
+          type="button" 
+          class="cancel-btn" 
+          (click)="closePopup()"
+          [disabled]="sending"
+        >
+          <span class="btn-icon">✗</span>
+          ביטול
+        </button>
+      </div>
+
+    </form>
+
+    <!-- אלמנטים דקורטיביים -->
+    <div class="decoration decoration-1"></div>
+    <div class="decoration decoration-2"></div>
+    
+  </div>
+</div>

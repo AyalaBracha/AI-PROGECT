@@ -1,0 +1,134 @@
+<!-- <div class="p-fluid recipe-quick-container">
+  <h2>יצירת מתכון מהירה</h2>
+  
+  <div class="form-section">
+    <label for="ingredients">רשימת מוצרים (מופרדים בפסיק):</label>
+    <input 
+      id="ingredients" 
+      [(ngModel)]="ingredients" 
+      placeholder="למשל: ביצים, קמח, חלב" 
+      class="ingredients-input"
+    />
+  </div>
+
+  <div class="preferences-section">
+    <h3>העדפות מתכון</h3>
+    
+    <div class="preferences-grid">
+      <div class="pref-item">
+        <label for="servings">מספר מנות:</label>
+        <input 
+          type="number" 
+          id="servings" 
+          [(ngModel)]="servings" 
+          min="1" 
+          max="20"
+          placeholder="4"
+        />
+      </div>
+
+      <div class="pref-item">
+        <label for="maxCalories">קלוריות מקסימליות למנה:</label>
+        <input 
+          type="number" 
+          id="maxCalories" 
+          [(ngModel)]="maxCalories" 
+          min="50" 
+          max="5000"
+          placeholder="500"
+        />
+      </div>
+    </div>
+
+    <div class="checkboxes">
+      <label class="checkbox-label">
+        <input type="checkbox" [(ngModel)]="vegetarian" />
+        צמחוני
+      </label>
+      
+      <label class="checkbox-label">
+        <input type="checkbox" [(ngModel)]="vegan" />
+        טבעוני
+      </label>
+      
+      <label class="checkbox-label">
+        <input type="checkbox" [(ngModel)]="glutenFree" />
+        ללא גלוטן
+      </label>
+    </div>
+  </div>
+
+  <button 
+    type="button" 
+    (click)="send()" 
+    [disabled]="loading" 
+    class="submit-btn"
+  >
+    {{ loading ? 'מייצר מתכון...' : 'שלח' }}
+  </button>
+
+  <div *ngIf="errorMessage" class="error-message">
+    {{ errorMessage }}
+  </div>
+
+  <div *ngIf="recipe" class="recipe-result">
+    <h3>{{ recipe.title }}</h3>
+    
+    <div *ngIf="recipe.imageBase64" class="recipe-image-container">
+      <img 
+        [src]="'data:image/jpeg;base64,' + recipe.imageBase64" 
+        alt="תמונת המתכון" 
+        class="recipe-image"
+      />
+    </div>
+
+    <div *ngIf="recipe.description" class="recipe-section">
+      <h4>תיאור</h4>
+      <p>{{ recipe.description }}</p>
+    </div>
+
+    <div *ngIf="recipe.ingredients" class="recipe-section">
+      <h4>מצרכים:</h4>
+      <ul>
+        <li *ngFor="let ing of recipe.ingredients">{{ ing }}</li>
+      </ul>
+    </div>
+
+    <div *ngIf="recipe.instructions" class="recipe-section">
+      <h4>הוראות הכנה:</h4>
+      <ol>
+        <li *ngFor="let inst of recipe.instructions">{{ inst }}</li>
+      </ol>
+    </div>
+
+    <div *ngIf="recipe.nutrition" class="recipe-section">
+      <h4>ערכים תזונתיים:</h4>
+      <div class="nutrition-grid">
+        <div class="nutrition-item">
+          <strong>סה"כ קלוריות:</strong> 
+          <span>{{ recipe.nutrition.caloriesTotal }}</span>
+        </div>
+        <div class="nutrition-item">
+          <strong>קלוריות למנה:</strong> 
+          <span>{{ recipe.nutrition.caloriesPerServing }}</span>
+        </div>
+        <div class="nutrition-item">
+          <strong>חלבון למנה:</strong> 
+          <span>{{ recipe.nutrition.proteinPerServing }}</span>
+        </div>
+        <div class="nutrition-item">
+          <strong>פחמימות למנה:</strong> 
+          <span>{{ recipe.nutrition.carbsPerServing }}</span>
+        </div>
+        <div class="nutrition-item">
+          <strong>שומן למנה:</strong> 
+          <span>{{ recipe.nutrition.fatPerServing }}</span>
+        </div>
+      </div>
+    </div>
+
+    <button class="download-btn" (click)="downloadPDF()">
+      📥 הורד כ-PDF
+    </button>
+  </div>
+</div> -->

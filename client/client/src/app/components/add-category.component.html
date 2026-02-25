@@ -1,0 +1,69 @@
+<div class="add-category-container">
+  <div class="form-card">
+    <h2>➕ הוספת קטגוריה חדשה</h2>
+    
+    <form (ngSubmit)="onSubmit()" #categoryForm="ngForm">
+      <!-- שם הקטגוריה -->
+      <div class="form-group">
+        <label for="name">שם הקטגוריה *</label>
+        <input 
+          type="text" 
+          id="name" 
+          name="name"
+          [(ngModel)]="categoryName"
+          required
+          placeholder="הזן שם קטגוריה..."
+          [disabled]="loading"
+        />
+      </div>
+
+      <!-- בחירת אייקון -->
+      <div class="form-group">
+        <label>בחר אייקון</label>
+        <div class="icon-grid">
+          <div 
+            *ngFor="let icon of availableIcons"
+            class="icon-option"
+            [class.selected]="categoryImage === icon"
+            (click)="selectIcon(icon)"
+          >
+            {{ icon }}
+          </div>
+        </div>
+        <div class="selected-icon">
+          <span>אייקון נבחר:</span>
+          <span class="icon-preview">{{ categoryImage }}</span>
+        </div>
+      </div>
+
+      <!-- הודעות -->
+      <div class="message success" *ngIf="successMessage">
+        ✅ {{ successMessage }}
+      </div>
+      
+      <div class="message error" *ngIf="errorMessage">
+        ❌ {{ errorMessage }}
+      </div>
+
+      <!-- כפתורים -->
+      <div class="form-actions">
+        <button 
+          type="button" 
+          class="btn-cancel" 
+          (click)="cancel()"
+          [disabled]="loading"
+        >
+          ביטול
+        </button>
+        <button 
+          type="submit" 
+          class="btn-submit"
+          [disabled]="!categoryName.trim() || loading"
+        >
+          <span *ngIf="!loading">הוסף קטגוריה</span>
+          <span *ngIf="loading">שומר...</span>
+        </button>
+      </div>
+    </form>
+  </div>
+</div>

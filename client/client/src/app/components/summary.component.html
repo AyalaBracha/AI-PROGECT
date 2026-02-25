@@ -1,0 +1,170 @@
+<div class="summary-container">
+  <div class="header">
+    <button class="back-btn" (click)="goBack()">← חזור</button>
+    <h1>סיכום המוצרים</h1>
+  </div>
+
+  <div class="selected-products" *ngIf="!recipe">
+    <h2>המוצרים שנבחרו ({{ selectedProducts.length }})</h2>
+    
+    <div class="products-list">
+      <div *ngFor="let item of selectedProducts" class="product-item">
+        <div class="product-info">
+          <span class="product-icon">{{ item.product.image }}</span>
+          <div>
+            <strong>{{ item.product.name }}</strong>
+          </div>
+        </div>
+        <button class="remove-btn" (click)="removeProduct(item.product.id)">×</button>
+      </div>
+    </div>
+
+    <!-- הגדרות מתכון -->
+    <div class="recipe-settings">
+      <h3>העדפות מתכון</h3>
+      
+      <div class="settings-grid">
+        <div class="setting-item">
+          <label for="servings">מספר מנות: *</label>
+          <input 
+            type="number" 
+            id="servings" 
+            [(ngModel)]="servings" 
+            min="1" 
+            max="2000"
+            placeholder="4"
+            [class.invalid]="servingsError"
+            (blur)="validateServings()"
+          />
+          <span class="error-text" *ngIf="servingsError">{{ servingsError }}</span>
+        </div>
+
+        <div class="setting-item">
+          <label for="maxCalories">קלוריות מקסימליות למנה: *</label>
+          <input 
+            type="number" 
+            id="maxCalories" 
+            [(ngModel)]="maxCalories" 
+            min="20" 
+            max="5000"
+            placeholder="500"
+            [class.invalid]="caloriesError"
+            (blur)="validateCalories()"
+          />
+          <span class="error-text" *ngIf="caloriesError">{{ caloriesError }}</span>
+        </div>
+      </div>
+
+      <div class="checkboxes">
+        <label class="checkbox-label">
+          <input type="checkbox" [(ngModel)]="vegetarian" />
+          <span>🥬 צמחוני</span>
+        </label>
+        
+        <label class="checkbox-label">
+          <input type="checkbox" [(ngModel)]="vegan" />
+          <span>🌱 טבעוני</span>
+        </label>
+        
+        <label class="checkbox-label">
+          <input type="checkbox" [(ngModel)]="glutenFree" />
+          <span>🌾 ללא גלוטן</span>
+        </label>
+      </div>
+    </div>
+
+    <div class="actions">
+      <button class="generate-btn" (click)="generateRecipe()" [disabled]="loading || hasValidationErrors()">
+        <span *ngIf="!loading">🎯 צור מתכון</span>
+        <span *ngIf="loading" class="loading-content">
+          <span class="spinner"></span>
+          <span>מייצר מתכון...</span>
+        </span>
+      </button>
+      <button class="clear-btn" (click)="startOver()">🔄 התחל מחדש</button>
+    </div>
+  </div>
+
+  <div class="error-message" *ngIf="errorMessage">
+    ❌ {{ errorMessage }}
+  </div>
+
+  <div class="recipe-result" *ngIf="recipe">
+    <h2>{{ recipe.title }}</h2>
+    
+    <div class="recipe-section" *ngIf="recipe.imageBase64">
+      <img [src]="'data:image/jpeg;base64,' + recipe.imageBase64" alt="תמונת המתכון" class="recipe-image" />
+    </div>
+
+    <div class="recipe-section" *ngIf="recipe.description">
+      <h3>📝 תיאור</h3>
+      <p>{{ recipe.description }}</p>
+    </div>
+
+    <div class="recipe-section" *ngIf="recipe.ingredients && recipe.ingredients.length > 0">
+      <h3>🛒 מצרכים</h3>
+      <ul>
+        <li *ngFor="let ing of recipe.ingredients">{{ ing }}</li>
+      </ul>
+    </div>
+
+    <div class="recipe-section" *ngIf="recipe.instructions && recipe.instructions.length > 0">
+      <h3>👨‍🍳 הוראות הכנה</h3>
+      <ol>
+        <li *ngFor="let instruction of recipe.instructions">{{ instruction }}</li>
+      </ol>
+    </div>
+
+    <div class="recipe-section" *ngIf="recipe.nutrition">
+      <h3>📊 ערכים תזונתיים</h3>
+      <div class="nutrition-grid">
+        <div class="nutrition-item">
+          <strong>סה"כ קלוריות:</strong>
+          <span>{{ recipe.nutrition.caloriesTotal }}</span>
+        </div>
+        <div class="nutrition-item">
+          <strong>קלוריות למנה:</strong>
+          <span>{{ recipe.nutrition.caloriesPerServing }}</span>
+        </div>
+        <div class="nutrition-item">
+          <strong>חלבון למנה:</strong>
+          <span>{{ recipe.nutrition.proteinPerServing }}</span>
+        </div>
+        <div class="nutrition-item">
+          <strong>פחמימות למנה:</strong>
+          <span>{{ recipe.nutrition.carbsPerServing }}</span>
+        </div>
+        <div class="nutrition-item">
+          <strong>שומן למנה:</strong>
+          <span>{{ recipe.nutrition.fatPerServing }}</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="recipe-section" *ngIf="recipe.notes && recipe.notes.length > 0">
+      <h3>💡 הערות וטיפים</h3>
+      <ul class="notes-list">
+        <li *ngFor="let note of recipe.notes">{{ note }}</li>
+      </ul>
+    </div>
+
+    <div class="recipe-actions">
+      <button class="download-btn" (click)="downloadPDF()">
+        📥 הורד כ-PDF
+      </button>
+      <button class="email-btn" (click)="showEmailPopup = true">
+        ✉️ שלח למייל
+      </button>
+      <button class="start-over-btn" (click)="startOver()">
+        🔄 צור מתכון נוסף
+      </button>
+    </div>
+  </div>
+</div>
+
+<app-send-email
+  *ngIf="showEmailPopup"
+  [recipeHtml]="createHTMLContent()"
+  [recipeTitle]="recipe?.title ?? ''"
+  (close)="showEmailPopup = false">
+</app-send-email>
